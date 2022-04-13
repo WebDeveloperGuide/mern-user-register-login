@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, {useEffect,useState, MouseEvent} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -28,6 +30,7 @@ import { mainListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import { logout } from "../redux/actions/userActions";
 
 const Copyright = (props) => {
   return (
@@ -91,14 +94,23 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
-  const [open, setOpen] = React.useState(true);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+
+
+  const logoutHandler = () => {
+      dispatch(logout());    
+      history.push("/login");
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
   const openEl = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent) => {
+  const handleClick = (event: MouseEvent) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -203,9 +215,9 @@ function DashboardContent() {
 		          </ListItemIcon>
 		          Settings
 		        </MenuItem>
-		        <MenuItem>
+		        <MenuItem onClick={logoutHandler}>
 		          <ListItemIcon>
-		            <Logout fontSize="small" />
+		            <Logout fontSize="small"/>
 		          </ListItemIcon>
 		          Logout
 		        </MenuItem>

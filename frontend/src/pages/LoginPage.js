@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React,{useEffect} from 'react';
+import {useDispatch,useSelector} from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {Link} from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { Login } from "../redux/actions/userActions";
 
 
 const Copyright = (props) => {
@@ -30,12 +33,23 @@ const Copyright = (props) => {
 
 const LoginPage = () => {
 
+  const history = useHistory();
+  const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const submitForm = (data) => {
-    
-    console.log(data)
+  const userPanelLogin = useSelector((state) => state.userPanelLogin);
+  const { userInfo } = userPanelLogin;
+
+  const submitForm = (data) => {    
+    const { email, password } = data;        
+    dispatch(Login(email, password));        
   };
+
+  useEffect(() => {
+    if (typeof userInfo !== 'undefined' && Object.keys(userInfo).length !== 0) {
+      history.push("/");
+    }      
+  }, [userInfo, history]);
 
   return (
     <>
