@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch,useSelector} from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useForm } from "react-hook-form";
 import {Link} from 'react-router-dom';
+import { Register, RegisterReset } from "../redux/actions/userActions";
 
 
 const Copyright = (props) => {
@@ -30,12 +33,24 @@ const Copyright = (props) => {
 
 
 const RegisterPage = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { register_status } = userRegister;
 
-  const submitForm = (data) => {
-    
-    console.log(data)
+  const submitForm = (data) => {    
+    const { firstName, lastName, email, password } = data;
+    dispatch(Register(firstName, lastName, email, password));
   };
+
+  useEffect(() => {
+       if(register_status){
+        history.push("/");
+        dispatch(RegisterReset());
+     }
+    
+  }, [dispatch, register_status]);
 
   return (
     <>

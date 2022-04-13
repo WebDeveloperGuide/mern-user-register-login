@@ -21,10 +21,10 @@ const NotFound = () =>{
 	            Page Not Found
 	        </Typography>
 	        <Typography component="p" sx={{marginTop: 2 }}>
-	            Maybe the page you are looking for has been removed, or you typed in the wrong URL
+	            Maybe the page you are looking for has been removed, or you typed in the wrong URL.
 	        </Typography> 
       		
-      		<Link to="/"><Button variant="contained" sx={{marginTop: 2 }}>Go to homepage</Button></Link>
+      		<Button variant="contained" component={Link} to="/" color="primary" sx={{marginTop: 2 }}>Go to homepage</Button>
 
       		</Box>
             </Container>

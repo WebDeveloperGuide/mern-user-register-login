@@ -108,7 +108,9 @@ const LoginPage = () => {
               <Grid item xs>
                 <Link 
                 	to="/forgot-password" 
-                	variant="body2">
+                	variant="body2"
+                  style={{float: "left"}}
+                  >
                   Forgot password?
                 </Link>
               </Grid>
