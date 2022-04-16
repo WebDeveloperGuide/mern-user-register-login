@@ -15,6 +15,7 @@ function App() {
       <Router>
         <Switch>
           <PrivateRouter path="/" component={HomePage} exact/>
+          <PrivateRouter path="/dashboard" component={HomePage}/>
           <Route path="/login" component={LoginPage}/>
           <Route path="/register" component={RegisterPage}/>
           <Route path="*" component={NotFound} />
